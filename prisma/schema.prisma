@@ -1,0 +1,18 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+
+model Budget { id String @id @default(cuid()); year Int @unique; importedAt DateTime @default(now()); sourceFile String; categories BudgetCategory[] }
+model BudgetCategory { id String @id @default(cuid()); name String; budgetId String; budget Budget @relation(fields:[budgetId],references:[id]); items BudgetItem[]; @@unique([budgetId,name]) }
+model BudgetItem { id String @id @default(cuid()); name String; categoryId String; category BudgetCategory @relation(fields:[categoryId],references:[id]); monthlyBudgets MonthlyBudget[]; classifications TransactionClassification[]; @@unique([categoryId,name]) }
+model MonthlyBudget { id String @id @default(cuid()); budgetItemId String; budgetItem BudgetItem @relation(fields:[budgetItemId],references:[id]); month Int; amountClp Int; @@unique([budgetItemId,month]) }
+model BankStatement { id String @id @default(cuid()); periodYear Int; periodMonth Int; sourcePath String; sourceHash String @unique; declaredChargesClp Int; declaredCreditsClp Int; extractedChargesClp Int; extractedCreditsClp Int; status StatementStatus @default(PENDING); transactions BankTransaction[]; @@unique([periodYear,periodMonth]) }
+model BankTransaction { id String @id @default(cuid()); statementId String; statement BankStatement @relation(fields:[statementId],references:[id]); fingerprint String @unique; bookedAt DateTime; description String; documentNumber String?; channel String?; chargeClp Int?; creditClp Int?; balanceClp Int; classification TransactionClassification? }
+model TransactionClassification { id String @id @default(cuid()); transactionId String @unique; transaction BankTransaction @relation(fields:[transactionId],references:[id]); incomeConceptId String?; incomeConcept IncomeConcept? @relation(fields:[incomeConceptId],references:[id]); budgetItemId String?; budgetItem BudgetItem? @relation(fields:[budgetItemId],references:[id]); contributorId String?; contributor Contributor? @relation(fields:[contributorId],references:[id]); status ClassificationStatus @default(PENDING); confidence Int?; note String?; validatedAt DateTime? }
+model IncomeConcept { id String @id @default(cuid()); name String @unique; classifications TransactionClassification[] }
+model Contributor { id String @id @default(cuid()); normalizedName String @unique; active Boolean @default(true); note String?; aliases ContributorAlias[]; classifications TransactionClassification[] }
+model ContributorAlias { id String @id @default(cuid()); contributorId String; contributor Contributor @relation(fields:[contributorId],references:[id]); alias String @unique }
+model ClassificationRule { id String @id @default(cuid()); matchText String; incomeConceptId String?; budgetItemId String?; confidence Int; active Boolean @default(true); createdAt DateTime @default(now()) }
+model MonthlyClose { id String @id @default(cuid()); year Int; month Int; closedAt DateTime?; reopenedAt DateTime?; @@unique([year,month]) }
+model AuditLog { id String @id @default(cuid()); entityType String; entityId String; action String; before Json?; after Json?; createdAt DateTime @default(now()) }
+enum StatementStatus { PENDING RECONCILED FAILED CLOSED }
+enum ClassificationStatus { PENDING SUGGESTED CONFIRMED REVIEW }
