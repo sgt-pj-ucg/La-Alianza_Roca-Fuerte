@@ -21,23 +21,29 @@ async function ensureCatalogs(client: any) {
     const { data, error } = await client.from("budgets").insert({ year: 2026, source_file: "Presupuesto año 2026.xlsx" }).select("id").single();
     if (error) throw new Error(error.message);
     budgetId = data.id;
-  }
+  } else return budgetId;
+
   const categories = [...new Set(INITIAL_BUDGET.map(item => item.category))];
-  for (const name of categories) {
-    const { error } = await client.from("budget_categories").upsert({ budget_id: budgetId, name }, { onConflict: "budget_id,name" });
-    if (error) throw new Error(error.message);
-  }
+  const { error: categoriesUpsertError } = await client.from("budget_categories").upsert(
+    categories.map(name => ({ budget_id: budgetId, name })),
+    { onConflict: "budget_id,name" }
+  );
+  if (categoriesUpsertError) throw new Error(categoriesUpsertError.message);
   const { data: categoryRows, error: categoryError } = await client.from("budget_categories").select("id,name").eq("budget_id", budgetId);
   if (categoryError) throw new Error(categoryError.message);
   const byName = new Map((categoryRows ?? []).map((row: any) => [row.name, row.id]));
-  for (const item of INITIAL_BUDGET) {
-    const { error } = await client.from("budget_items").upsert({ category_id: byName.get(item.category), name: item.item }, { onConflict: "category_id,name" });
-    if (error) throw new Error(error.message);
-  }
-  for (const name of ["Diezmo", "Ofrenda", "Aporte", "Transferencia interna", "Otro ingreso"]) {
-    const { error } = await client.from("income_concepts").upsert({ name }, { onConflict: "name" });
-    if (error) throw new Error(error.message);
-  }
+  const [{ error: itemsUpsertError }, { error: conceptsUpsertError }] = await Promise.all([
+    client.from("budget_items").upsert(
+      INITIAL_BUDGET.map(item => ({ category_id: byName.get(item.category), name: item.item })),
+      { onConflict: "category_id,name" }
+    ),
+    client.from("income_concepts").upsert(
+      ["Diezmo", "Ofrenda", "Aporte", "Transferencia interna", "Otro ingreso"].map(name => ({ name })),
+      { onConflict: "name" }
+    )
+  ]);
+  if (itemsUpsertError || conceptsUpsertError) throw new Error(itemsUpsertError?.message ?? conceptsUpsertError?.message);
+  return budgetId;
 }
 
 export async function GET(request: Request) {
@@ -46,7 +52,7 @@ export async function GET(request: Request) {
     const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statements, error: statementsError }] = await Promise.all([
       client.from("income_concepts").select("id,name").order("name"),
       client.from("budget_items").select("id,name,budget_categories(name)").order("name"),
-      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(*,transaction_classifications(id,income_concept_id,budget_item_id,status,note))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
+      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
     ]);
     if (conceptsError || itemsError || statementsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementsError?.message);
     const transactions = (statements?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
