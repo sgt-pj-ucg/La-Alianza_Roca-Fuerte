@@ -57,8 +57,10 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
     const tail = chunk.slice((channelMatch.index ?? 0) + channelMatch[0].length);
     const doc = tail.match(/^\s*(\d{6,})\b/)?.[1] ?? null;
     const [amount, balanceClp] = values;
-    const isCharge = /\bTraspaso\s+A(?::|\s+Cuenta)/i.test(description);
-    const isCredit = /\bTraspaso\s+De:|\bDepos\.?\s+Efectivo/i.test(description);
+    // El nombre bancario se conserva tal cual. Solo determinamos el sentido contable
+    // para no descartar pagos de servicios o depósitos escritos de otra forma.
+    const isCharge = /\bTraspaso\s+A(?::|\s+Cuenta)|\bPago\s+Servicio/i.test(description);
+    const isCredit = /\bTraspaso\s+De:|\bDep[oó]s(?:ito)?\s+En\s+Efectivo/i.test(description);
     if (!isCharge && !isCredit) { issues.push(`No se pudo determinar cargo/abono para ${date[0]}.`); continue; }
     const bookedAt = `${date[3]}-${date[2]}-${date[1]}`;
     // El índice de fila evita colisiones incluso cuando dos movimientos tienen los mismos datos visibles.
