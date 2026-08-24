@@ -56,14 +56,17 @@ async function ensureCatalogs(client: any) {
 export async function GET(request: Request) {
   try {
     const client = await database(request); await ensureCatalogs(client);
-    const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statements, error: statementsError }] = await Promise.all([
+    const url = new URL(request.url); const year = Number(url.searchParams.get("year") ?? 2026); const month = Number(url.searchParams.get("month") ?? 1);
+    if (!Number.isInteger(year) || !Number.isInteger(month) || month < 1 || month > 12) return NextResponse.json({ error: "El período seleccionado no es válido." }, { status: 400 });
+    const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statement, error: statementError }, { data: months, error: monthsError }] = await Promise.all([
       client.from("income_concepts").select("id,name").order("name"),
       client.from("budget_items").select("id,name,budget_categories(name)").order("name"),
-      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id,note),transaction_income_allocations(id,income_concept_id,amount_clp,description))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
+      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id,note),transaction_income_allocations(id,income_concept_id,amount_clp,description))").eq("period_year", year).eq("period_month", month).maybeSingle(),
+      client.from("bank_statements").select("period_year,period_month,status").order("period_year", { ascending: true }).order("period_month", { ascending: true })
     ]);
-    if (conceptsError || itemsError || statementsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementsError?.message);
-    const transactions = (statements?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
-    return NextResponse.json({ concepts, items, transactions });
+    if (conceptsError || itemsError || statementError || monthsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementError?.message ?? monthsError?.message);
+    const transactions = (statement?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
+    return NextResponse.json({ concepts, items, transactions, months: months ?? [], period: { year, month } });
   } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "No fue posible cargar la clasificación." }, { status: 422 }); }
 }
 
