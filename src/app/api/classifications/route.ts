@@ -59,7 +59,7 @@ export async function GET(request: Request) {
     const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statements, error: statementsError }] = await Promise.all([
       client.from("income_concepts").select("id,name").order("name"),
       client.from("budget_items").select("id,name,budget_categories(name)").order("name"),
-      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id),transaction_income_allocations(id,income_concept_id,amount_clp,description))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
+      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id,note))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
     ]);
     if (conceptsError || itemsError || statementsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementsError?.message);
     const transactions = (statements?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
@@ -71,29 +71,11 @@ export async function POST(request: Request) {
   try {
     const client = await database(request);
     const body = await request.json();
-    if (!body.transactionId || (!body.incomeConceptId && !body.budgetItemId && !body.allocations)) return NextResponse.json({ error: "Selecciona un concepto o partida." }, { status: 400 });
-    if (Array.isArray(body.allocations)) {
-      const { data: transaction, error: transactionError } = await client.from("bank_transactions").select("credit_clp").eq("id", body.transactionId).single();
-      if (transactionError || !transaction?.credit_clp) throw new Error("Solo los ingresos pueden dividirse en partidas.");
-      const allocations = body.allocations.map((row: any) => ({
-        transaction_id: body.transactionId,
-        income_concept_id: String(row.incomeConceptId ?? ""),
-        amount_clp: Number(row.amountClp),
-        description: String(row.description ?? "").trim()
-      }));
-      if (!allocations.length || allocations.some((row: any) => !row.income_concept_id || !Number.isInteger(row.amount_clp) || row.amount_clp <= 0 || !row.description)) {
-        return NextResponse.json({ error: "Cada partida debe tener categoría, monto entero mayor que cero y descripción." }, { status: 400 });
-      }
-      if (allocations.reduce((sum: number, row: any) => sum + row.amount_clp, 0) !== Number(transaction.credit_clp)) {
-        return NextResponse.json({ error: "La distribución debe sumar exactamente el 100% del ingreso." }, { status: 400 });
-      }
-      const { data: validConcepts, error: conceptsError } = await client.from("income_concepts").select("id").in("id", allocations.map((row: any) => row.income_concept_id));
-      if (conceptsError || validConcepts?.length !== new Set(allocations.map((row: any) => row.income_concept_id)).size) throw new Error("Una categoría de ingreso no es válida.");
-      const { error: deleteError } = await client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId);
-      if (deleteError) throw new Error(deleteError.message);
-      const { error: insertError } = await client.from("transaction_income_allocations").insert(allocations);
-      if (insertError) throw new Error(insertError.message);
-      return NextResponse.json({ ok: true });
+    if (!body.transactionId || (!body.incomeConceptId && !body.budgetItemId)) return NextResponse.json({ error: "Selecciona un concepto o partida." }, { status: 400 });
+    if (body.incomeConceptId) {
+      const { data: concept, error: conceptError } = await client.from("income_concepts").select("name").eq("id", body.incomeConceptId).single();
+      if (conceptError) throw new Error(conceptError.message);
+      if (concept?.name === "Otro ingreso" && !String(body.note ?? "").trim()) return NextResponse.json({ error: "Describe este otro ingreso antes de confirmar." }, { status: 400 });
     }
     const { error } = await client.from("transaction_classifications").upsert({
       transaction_id: body.transactionId, income_concept_id: body.incomeConceptId ?? null, budget_item_id: body.budgetItemId ?? null,
