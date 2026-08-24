@@ -59,7 +59,7 @@ export async function GET(request: Request) {
     const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statements, error: statementsError }] = await Promise.all([
       client.from("income_concepts").select("id,name").order("name"),
       client.from("budget_items").select("id,name,budget_categories(name)").order("name"),
-      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id,note))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
+      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(id,booked_at,description,display_name,charge_clp,credit_clp,transaction_classifications(income_concept_id,budget_item_id,note),transaction_income_allocations(id,income_concept_id,amount_clp,description))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
     ]);
     if (conceptsError || itemsError || statementsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementsError?.message);
     const transactions = (statements?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
@@ -71,11 +71,29 @@ export async function POST(request: Request) {
   try {
     const client = await database(request);
     const body = await request.json();
-    if (!body.transactionId || (!body.incomeConceptId && !body.budgetItemId)) return NextResponse.json({ error: "Selecciona un concepto o partida." }, { status: 400 });
+    if (!body.transactionId || (!body.incomeConceptId && !body.budgetItemId && !Array.isArray(body.allocations))) return NextResponse.json({ error: "Selecciona un concepto o partida." }, { status: 400 });
+    if (Array.isArray(body.allocations)) {
+      const { data: transaction, error: transactionError } = await client.from("bank_transactions").select("credit_clp").eq("id", body.transactionId).single();
+      if (transactionError || !transaction?.credit_clp) throw new Error("Solo los ingresos pueden dividirse.");
+      const allocations = body.allocations.map((row: any) => ({ transaction_id: body.transactionId, income_concept_id: String(row.incomeConceptId ?? ""), amount_clp: Number(row.amountClp), description: String(row.description ?? "").trim() }));
+      if (!allocations.length || allocations.some((row: any) => !row.income_concept_id || !Number.isInteger(row.amount_clp) || row.amount_clp <= 0 || !row.description)) return NextResponse.json({ error: "Cada división necesita categoría, descripción y monto." }, { status: 400 });
+      if (allocations.reduce((sum: number, row: any) => sum + row.amount_clp, 0) !== Number(transaction.credit_clp)) return NextResponse.json({ error: "Las divisiones deben sumar exactamente el total del ingreso." }, { status: 400 });
+      const { error: deleteClassificationsError } = await client.from("transaction_classifications").delete().eq("transaction_id", body.transactionId);
+      if (deleteClassificationsError) throw new Error(deleteClassificationsError.message);
+      const { error: deleteAllocationsError } = await client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId);
+      if (deleteAllocationsError) throw new Error(deleteAllocationsError.message);
+      const { error: insertAllocationsError } = await client.from("transaction_income_allocations").insert(allocations);
+      if (insertAllocationsError) throw new Error(insertAllocationsError.message);
+      return NextResponse.json({ ok: true });
+    }
     if (body.incomeConceptId) {
       const { data: concept, error: conceptError } = await client.from("income_concepts").select("name").eq("id", body.incomeConceptId).single();
       if (conceptError) throw new Error(conceptError.message);
       if (concept?.name === "Otro ingreso" && !String(body.note ?? "").trim()) return NextResponse.json({ error: "Describe este otro ingreso antes de confirmar." }, { status: 400 });
+    }
+    if (body.incomeConceptId) {
+      const { error: deleteAllocationsError } = await client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId);
+      if (deleteAllocationsError) throw new Error(deleteAllocationsError.message);
     }
     const { error } = await client.from("transaction_classifications").upsert({
       transaction_id: body.transactionId, income_concept_id: body.incomeConceptId ?? null, budget_item_id: body.budgetItemId ?? null,
