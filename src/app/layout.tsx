@@ -3,6 +3,7 @@ import "./globals.css";
 import "./cartolas.css";
 import "./clasificacion.css";
 import "./branding.css";
+import "./auth.css";
 
 export const metadata: Metadata = {
   title: "Tesorería 2026",
