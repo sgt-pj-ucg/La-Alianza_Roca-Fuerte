@@ -43,12 +43,13 @@ async function ensureCatalogs(client: any) {
 export async function GET(request: Request) {
   try {
     const client = await database(request); await ensureCatalogs(client);
-    const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: transactions, error: transactionsError }] = await Promise.all([
+    const [{ data: concepts, error: conceptsError }, { data: items, error: itemsError }, { data: statements, error: statementsError }] = await Promise.all([
       client.from("income_concepts").select("id,name").order("name"),
       client.from("budget_items").select("id,name,budget_categories(name)").order("name"),
-      client.from("bank_transactions").select("*, bank_statements!inner(period_year,period_month,status), transaction_classifications(id,income_concept_id,budget_item_id,status,note)").eq("bank_statements.period_year", 2026).eq("bank_statements.period_month", 1).order("booked_at", { ascending: false })
+      client.from("bank_statements").select("period_year,period_month,status,bank_transactions(*,transaction_classifications(id,income_concept_id,budget_item_id,status,note))").eq("period_year", 2026).eq("period_month", 1).maybeSingle()
     ]);
-    if (conceptsError || itemsError || transactionsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? transactionsError?.message);
+    if (conceptsError || itemsError || statementsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementsError?.message);
+    const transactions = (statements?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
     return NextResponse.json({ concepts, items, transactions });
   } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "No fue posible cargar la clasificación." }, { status: 422 }); }
 }
