@@ -6,6 +6,10 @@ Proyecto Next.js inicial con navegación, presupuesto y modelo relacional Postgr
 
 En esta carpeta: `npm install` y después `npm run dev`. Abra `http://localhost:3000`.
 
+## Supabase
+
+Copie `.env.example` como `.env.local` y complete las variables. Ejecute primero `supabase/migrations/20260823_initial_schema.sql` en el SQL Editor de Supabase. La migración crea las tablas, activa RLS, revoca todo acceso de `anon`/`authenticated` y crea un bucket privado para cartolas. Las políticas y la autenticación se habilitarán junto con el módulo de usuarios; hasta entonces, el acceso está denegado por defecto.
+
 ## Fuentes verificadas
 
 - `Presupuesto año 2026.xlsx`: una hoja (`Ppto. 2026`), 26 partidas operativas y cinco categorías. Se preservan los montos mensuales; no se redistribuyen anualmente. Sus filas de subtotal muestran importes con decimales que no se pueden reproducir solo a partir de las partidas visibles; por exactitud, la interfaz suma las partidas operativas y conserva aquellos subtotales como información de origen que debe aclararse antes de una aprobación anual.
