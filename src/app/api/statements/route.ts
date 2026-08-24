@@ -56,6 +56,16 @@ export async function POST(request: Request) {
     if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) return NextResponse.json({ error: "Solo se aceptan archivos PDF." }, { status: 415 });
     if (file.size > 10 * 1024 * 1024) return NextResponse.json({ error: "El PDF supera el límite de 10 MB." }, { status: 413 });
     const source = Buffer.from(await file.arrayBuffer()); const parsed = await extractBankStatement(source);
+    const { data: existing, error: existingError } = await client.from("bank_statements").select("id,status").eq("period_year", parsed.periodYear).eq("period_month", parsed.periodMonth).maybeSingle();
+    if (existingError) throw new Error(existingError.message);
+    if (existing?.status === "FAILED") {
+      const { error: removeTransactionsError } = await client.from("bank_transactions").delete().eq("statement_id", existing.id);
+      if (removeTransactionsError) throw new Error(removeTransactionsError.message);
+      const { error: removeStatementError } = await client.from("bank_statements").delete().eq("id", existing.id);
+      if (removeStatementError) throw new Error(removeStatementError.message);
+    } else if (existing) {
+      return NextResponse.json({ error: "Este mes ya tiene una cartola conciliada o pendiente; no se reemplazó." }, { status: 409 });
+    }
     const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "_");
     const sourcePath = `${parsed.periodYear}/${String(parsed.periodMonth).padStart(2, "0")}/${parsed.sourceHash}-${safeFileName}`;
     // Permite reintentar una carga fallida con el mismo PDF; la tabla conserva la protección contra duplicados confirmados.
@@ -74,6 +84,7 @@ export async function POST(request: Request) {
       charge_clp: transaction.chargeClp, credit_clp: transaction.creditClp, balance_clp: transaction.balanceClp
     })));
     if (transactionError) {
+      await client.from("bank_transactions").delete().eq("statement_id", statement.id);
       await client.from("bank_statements").delete().eq("id", statement.id);
       await client.storage.from("bank-statements").remove([sourcePath]);
       throw new Error(transactionError.message);

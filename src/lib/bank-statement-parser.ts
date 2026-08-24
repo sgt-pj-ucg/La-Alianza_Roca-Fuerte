@@ -22,6 +22,7 @@ const declared = (text: string, label: string) => {
 };
 
 export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedStatement> {
+  const sourceHash = createHash("sha256").update(pdfBuffer).digest("hex");
   const parsed = await pdf(pdfBuffer, { pagerender: async (page: { getTextContent: () => Promise<{ items: Array<{ str: string; width: number; transform: number[] }> }> }) => {
     const content = await page.getTextContent(); let text = ""; let lastY: number | null = null; let lastRight = 0;
     for (const item of content.items) {
@@ -41,7 +42,7 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
   const transactions: ExtractedTransaction[] = [];
   const issues: string[] = [];
 
-  for (const chunk of chunks) {
+  for (const [rowIndex, chunk] of chunks.entries()) {
     const date = chunk.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
     if (!date) continue;
     const channelMatch = chunk.match(/\b(Internet|La Serena)\b/);
@@ -55,8 +56,8 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
     const isCredit = /\bTraspaso\s+De:|\bDepos\.?\s+Efectivo/i.test(description);
     if (!isCharge && !isCredit) { issues.push(`No se pudo determinar cargo/abono para ${date[0]}.`); continue; }
     const bookedAt = `${date[3]}-${date[2]}-${date[1]}`;
-    // El saldo distingue movimientos que coinciden en fecha, descripción, monto y documento.
-    const fingerprint = createHash("sha256").update([bookedAt, description, isCharge ? "C" : "A", amount, balanceClp, doc ?? ""].join("|"), "utf8").digest("hex");
+    // El índice de fila evita colisiones incluso cuando dos movimientos tienen los mismos datos visibles.
+    const fingerprint = createHash("sha256").update([sourceHash, rowIndex, bookedAt, description, isCharge ? "C" : "A", amount, balanceClp, doc ?? ""].join("|"), "utf8").digest("hex");
     transactions.push({ fingerprint, bookedAt, description, channel: channelMatch[1], documentNumber: doc, chargeClp: isCharge ? amount : null, creditClp: isCredit ? amount : null, balanceClp });
   }
   if (!transactions.length) throw new Error("No se extrajeron movimientos válidos.");
@@ -64,5 +65,5 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
   const extractedCreditsClp = transactions.reduce((sum, row) => sum + (row.creditClp ?? 0), 0);
   if (extractedChargesClp !== declaredChargesClp) issues.push(`Cargos extraídos ${extractedChargesClp}; cartola ${declaredChargesClp}.`);
   if (extractedCreditsClp !== declaredCreditsClp) issues.push(`Abonos extraídos ${extractedCreditsClp}; cartola ${declaredCreditsClp}.`);
-  return { sourceHash: createHash("sha256").update(pdfBuffer).digest("hex"), periodYear: Number(transactions[0].bookedAt.slice(0,4)), periodMonth: Number(transactions[0].bookedAt.slice(5,7)), declaredChargesClp, declaredCreditsClp, extractedChargesClp, extractedCreditsClp, reconciled: issues.length === 0, transactions, issues };
+  return { sourceHash, periodYear: Number(transactions[0].bookedAt.slice(0,4)), periodMonth: Number(transactions[0].bookedAt.slice(5,7)), declaredChargesClp, declaredCreditsClp, extractedChargesClp, extractedCreditsClp, reconciled: issues.length === 0, transactions, issues };
 }
