@@ -1,5 +1,8 @@
 -- Reemplace SOLO el texto entre comillas por el UID del usuario de tesorería
 -- que aparece en Authentication > Users. No comparta ese UID en chat.
+create schema if not exists private;
+revoke all on schema private from public;
+
 create or replace function private.is_treasurer()
 returns boolean language sql stable security definer set search_path = '' as $$
   select auth.uid() = 'REEMPLAZAR_CON_UID_DE_TESORERIA'::uuid;

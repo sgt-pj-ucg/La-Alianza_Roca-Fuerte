@@ -8,5 +8,5 @@ export function AuthGate({ children }: { children: ReactNode }) {
   async function login() { if (!supabase) return; setError(""); const { error } = await supabase.auth.signInWithPassword({ email, password }); if (error) setError("No fue posible iniciar sesión. Revisa correo y contraseña."); }
   if (!ready) return <main className="auth-screen">Conectando con Tesorería…</main>;
   if (!signedIn) return <main className="auth-screen"><section><p className="eyebrow">TESORERÍA IGLESIA · 2026</p><h1>Acceso seguro</h1><p>Ingresa con el usuario autorizado de Supabase.</p><input placeholder="Correo" type="email" value={email} onChange={e => setEmail(e.target.value)} /><input placeholder="Contraseña" type="password" value={password} onChange={e => setPassword(e.target.value)} /><button className="primary" onClick={login}>Iniciar sesión</button>{error && <small>{error}</small>}</section></main>;
-  return <>{children}</>;
+  return <><button className="sign-out" onClick={() => supabase?.auth.signOut()}>Cerrar sesión</button>{children}</>;
 }
