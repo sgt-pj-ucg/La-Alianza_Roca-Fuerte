@@ -10,6 +10,9 @@ $$;
 
 revoke all on function private.is_treasurer() from public;
 grant execute on function private.is_treasurer() to authenticated;
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on public.budgets, public.budget_categories, public.budget_items, public.monthly_budgets, public.bank_statements, public.bank_transactions, public.income_concepts, public.contributors, public.contributor_aliases, public.transaction_classifications, public.classification_rules, public.monthly_closes to authenticated;
+grant select on public.audit_logs to authenticated;
 
 create policy "treasurer manages budgets" on public.budgets for all to authenticated using ((select private.is_treasurer())) with check ((select private.is_treasurer()));
 create policy "treasurer manages categories" on public.budget_categories for all to authenticated using ((select private.is_treasurer())) with check ((select private.is_treasurer()));

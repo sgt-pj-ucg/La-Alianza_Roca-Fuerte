@@ -58,7 +58,8 @@ export async function POST(request: Request) {
     const source = Buffer.from(await file.arrayBuffer()); const parsed = await extractBankStatement(source);
     const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "_");
     const sourcePath = `${parsed.periodYear}/${String(parsed.periodMonth).padStart(2, "0")}/${parsed.sourceHash}-${safeFileName}`;
-    const upload = await client.storage.from("bank-statements").upload(sourcePath, source, { contentType: "application/pdf", upsert: false });
+    // Permite reintentar una carga fallida con el mismo PDF; la tabla conserva la protección contra duplicados confirmados.
+    const upload = await client.storage.from("bank-statements").upload(sourcePath, source, { contentType: "application/pdf", upsert: true });
     if (upload.error) throw new Error(upload.error.message);
     const { data: statement, error: statementError } = await client.from("bank_statements").insert({
       period_year: parsed.periodYear, period_month: parsed.periodMonth, source_path: sourcePath, source_hash: parsed.sourceHash,
@@ -72,7 +73,11 @@ export async function POST(request: Request) {
       description: transaction.description, document_number: transaction.documentNumber, channel: transaction.channel,
       charge_clp: transaction.chargeClp, credit_clp: transaction.creditClp, balance_clp: transaction.balanceClp
     })));
-    if (transactionError) throw new Error(transactionError.message);
+    if (transactionError) {
+      await client.from("bank_statements").delete().eq("id", statement.id);
+      await client.storage.from("bank-statements").remove([sourcePath]);
+      throw new Error(transactionError.message);
+    }
     const stored: StoredStatement = { ...parsed, id: statement.id, fileName: file.name, sourcePath, uploadedAt: statement.uploaded_at };
     return NextResponse.json(stored, { status: 201 });
   } catch (error) {
