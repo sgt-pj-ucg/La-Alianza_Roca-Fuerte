@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./cartolas.css";
+import "./clasificacion.css";
 
 export const metadata: Metadata = {
   title: "Tesorería 2026",
