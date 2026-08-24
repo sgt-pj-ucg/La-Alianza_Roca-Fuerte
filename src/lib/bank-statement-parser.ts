@@ -31,9 +31,14 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
       else if (lastY !== null && x > lastRight + 1) text += " ";
       text += item.str; lastY = y; lastRight = x + item.width;
     }
-    return text;
+    return `${text}\n[[PAGE_BREAK]]\n`;
   } });
-  const raw = parsed.text.replace(/\r/g, "").replace(/Infórmese[\s\S]*?Todos los Derechos Reservados/g, "");
+  let raw = parsed.text.replace(/\r/g, "").replace(/Infórmese[\s\S]*?Todos los Derechos Reservados/g, "");
+  // Algunas cartolas cortan una fila: montos al final de una página y descripción al inicio de la siguiente.
+  raw = raw.replace(
+    /\n(\d{1,3}(?:\.\d{3})+)\s+(\d{1,3}(?:\.\d{3})+)\s*\n\[\[PAGE_BREAK\]\]\s*\n(\d{2}\/\d{2}\/\d{4}[\s\S]*?\b(?:Internet|La Serena))(?=\s*\n\d{2}\/\d{2}\/\d{4})/g,
+    "\n$3 $1 $2"
+  ).replace(/\[\[PAGE_BREAK\]\]/g, "");
   const declaredChargesClp = declared(raw, "Total Cargos");
   const declaredCreditsClp = declared(raw, "Total Abonos");
   const start = raw.search(/Fecha\s*Descripción/);
