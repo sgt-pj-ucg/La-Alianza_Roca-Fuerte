@@ -1,18 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { StoredStatement } from "@/lib/local-statement-store";
+import type { StoredStatement } from "@/lib/statement-types";
 import { clp } from "@/lib/money";
 import { AuthGate } from "@/components/auth-gate";
+import { supabase } from "@/lib/supabase/client";
 
 export default function CartolasPage() {
   const [file, setFile] = useState<File | null>(null); const [result, setResult] = useState<StoredStatement | null>(null);
   const [history, setHistory] = useState<StoredStatement[]>([]); const [error, setError] = useState(""); const [loading, setLoading] = useState(false);
-  const load = () => fetch("/api/statements").then(r => r.json()).then(setHistory).catch(() => setHistory([]));
+  const request = async (url: string, init?: RequestInit) => {
+    const { data } = await supabase!.auth.getSession();
+    if (!data.session) throw new Error("Tu sesión expiró. Vuelve a iniciar sesión.");
+    return fetch(url, { ...init, headers: { ...init?.headers, Authorization: `Bearer ${data.session.access_token}` } });
+  };
+  const load = () => request("/api/statements").then(async r => r.ok ? r.json() : Promise.reject(await r.json())).then(setHistory).catch(() => setHistory([]));
   useEffect(() => { void load(); }, []);
   async function upload() {
     if (!file) return; setLoading(true); setError(""); setResult(null);
     const form = new FormData(); form.append("statement", file);
-    const response = await fetch("/api/statements", { method: "POST", body: form }); const data = await response.json(); setLoading(false);
+    const response = await request("/api/statements", { method: "POST", body: form }); const data = await response.json(); setLoading(false);
     if (!response.ok) { setError(data.error); return; } setResult(data); load();
   }
   return <AuthGate><main className="statement-page"><header className="statement-header"><a href="/">← Presupuesto 2026</a><div><p className="eyebrow">CARTOLAS BANCARIAS</p><h1>Cargar y conciliar</h1></div></header>
