@@ -1,0 +1,948 @@
+{
+  "sourceHash": "7b423f8bc3bb594cbf94f814110e5cd559a378036c540f3daee0e5daf0fb8672",
+  "periodYear": 2026,
+  "periodMonth": 1,
+  "declaredChargesClp": 4901066,
+  "declaredCreditsClp": 4081007,
+  "extractedChargesClp": 4901066,
+  "extractedCreditsClp": 4046008,
+  "reconciled": false,
+  "transactions": [
+    {
+      "fingerprint": "0e126e47decab87bfede54c55f9a700db33f48f11e6c53b80ee3718186231485",
+      "bookedAt": "2026-01-30",
+      "description": "Traspaso De: Jorge Alejandro Cortes Veliz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 60000,
+      "balanceClp": 6117271
+    },
+    {
+      "fingerprint": "b7bd85583b603b276ebdd76481db94fa38b2d7f7863c01ba2069f78383ee73d0",
+      "bookedAt": "2026-01-30",
+      "description": "Traspaso De: Jorge Alejandro Cortes Veliz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 240000,
+      "balanceClp": 6057271
+    },
+    {
+      "fingerprint": "6ca2ef247f815c891c8168b40276a537256eea387a12ebb84a72242fb836846e",
+      "bookedAt": "2026-01-29",
+      "description": "Depos. Efectivo En Autoservicio",
+      "channel": "La Serena",
+      "documentNumber": "8261730",
+      "chargeClp": null,
+      "creditClp": 61000,
+      "balanceClp": 5817271
+    },
+    {
+      "fingerprint": "27aaadd685f8e8d31c5c26f1ec93fcc8086bfc69f3d5fa54cb87fdc654258919",
+      "bookedAt": "2026-01-28",
+      "description": "Traspaso A: Iglesia Alianza Cristiana Y Mision",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 198000,
+      "creditClp": null,
+      "balanceClp": 5756271
+    },
+    {
+      "fingerprint": "12f7d99ab6735a97bccf1e6d1bd40d41b782f5039542b6d93433c5d1933b30f7",
+      "bookedAt": "2026-01-28",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 5954271
+    },
+    {
+      "fingerprint": "5bf819ff42c197ec316cd436935188021e725baa1e106ffcd70b47a64cbc92ee",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Jorge Alejandro Cortes Veliz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 5934271
+    },
+    {
+      "fingerprint": "46aae764c5a1c6250605dcafddd35c80b40addbf5a48007b3b50fc6827fdccac",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Angela Rebeca Covarrubias Alvarez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 3000,
+      "balanceClp": 5914271
+    },
+    {
+      "fingerprint": "c5f8958185cc06197471d68cd8bc598fdf384e651fc383bf8d7e054eb589f832",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Angela Rebeca Covarrubias Alvarez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 5911271
+    },
+    {
+      "fingerprint": "d63428970607ec04f9dcccca59689272949167ef90a3edd1e86646f65ca39b3f",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Ricardo Alejandro Rodriguez Gomez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 86940,
+      "balanceClp": 5891271
+    },
+    {
+      "fingerprint": "de89c374d186bbdd75f2aa2e8ad9a991cabcf79353ed902b2ff3261afad2a307",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Gil Valbuena Nemecio Samuel",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 38000,
+      "balanceClp": 5804331
+    },
+    {
+      "fingerprint": "05a655b9541e9e147ab1ac07de2b23c65e9e2d28b2c30d56779f74f271976b29",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Almeida Escalona Viviana Carolina",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5766331
+    },
+    {
+      "fingerprint": "8c14d1ff2b54da638ae3141270900c9d9f2c0267c90bd80b964bf06820b471f1",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Danilo Alfredo Tripainao Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5761331
+    },
+    {
+      "fingerprint": "b21cf021ec499ce56ce8d520ec7f3662e9e511316d57572ee31332d32c6dac46",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Madrid Codoceo Milton Mario",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 15000,
+      "balanceClp": 5756331
+    },
+    {
+      "fingerprint": "a12a506f1b4d9a5e6afa73e957cb8f725c6314e1c0fbcb4f6769e9f6ffaf578a",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Nilton Hugo Urrea Martinez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 664000,
+      "balanceClp": 5741331
+    },
+    {
+      "fingerprint": "dde65ccd6a54d00f2078f195f8643fccc84c02b61e397cb5a9e7c8a0d9206615",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Brandt Mora Ania Berzabeth",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5077331
+    },
+    {
+      "fingerprint": "dde65ccd6a54d00f2078f195f8643fccc84c02b61e397cb5a9e7c8a0d9206615",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Brandt Mora Ania Berzabeth",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5072331
+    },
+    {
+      "fingerprint": "bce96cc922770f86d4a6ae55ec218ee16a179fae46eba36b3e5321068a4468e9",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Brandt Mora Ania Berzabeth",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 60000,
+      "balanceClp": 5067331
+    },
+    {
+      "fingerprint": "7bdd8e368b9c79c92d00c826f7733f97df99285bf75039ead0a28d270ea08bb5",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Martinez Vargas Jaquelin Alejandra",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 15000,
+      "balanceClp": 5007331
+    },
+    {
+      "fingerprint": "0fc2f17dfca2c9c35f4e303088645003d731553dc940ed151707c8813ef8957e",
+      "bookedAt": "2026-01-26",
+      "description": "Traspaso De: Rojas Cornejo Veronica Herminia",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4992331
+    },
+    {
+      "fingerprint": "b3d4d2654307226ae472c29dfb3d4f5c35ac5ad2c4363490f0d78bc9caadfb30",
+      "bookedAt": "2026-01-23",
+      "description": "Traspaso De: Almeida Escalona Viviana Carolina",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 70000,
+      "balanceClp": 4972331
+    },
+    {
+      "fingerprint": "f38e6b445672b759c59ef26d88e734cbf30b6ed83a4c3ddc74e3d28f13a570ce",
+      "bookedAt": "2026-01-22",
+      "description": "Traspaso De: Carlos Octavio Moscoso Onate",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 40000,
+      "balanceClp": 4902331
+    },
+    {
+      "fingerprint": "e6dd6fed90a33774cec4de3f153812fe2fac80da30c45329d55beae4d1d0b095",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Cristian Rodolfo Pefaur Moraga",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 85000,
+      "balanceClp": 4862331
+    },
+    {
+      "fingerprint": "3e5fcaf50f9cda0c444a71e7fa82a2f0948b58ca90b657e540de228b67ee3a2b",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Raymond Albert Portino Beltran",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4777331
+    },
+    {
+      "fingerprint": "fb8b5266b3c92749e52b75a3189f5f9b4bf27867dd93f31477957906147d95fd",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Atenas Navarro Luis Miguel",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 30000,
+      "balanceClp": 4757331
+    },
+    {
+      "fingerprint": "e0e994d858cb82027b05d761e66db9e2c65d378fc329f84f8f4e6600cb9f5bb1",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Atenas Navarro Luis Miguel",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 40000,
+      "balanceClp": 4727331
+    },
+    {
+      "fingerprint": "2056ea9bdf110b85aaf81cd7428e7d16c92437d983351a15c23cd0cd54d40215",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Sergio Adolfo Figueroa Momo",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4687331
+    },
+    {
+      "fingerprint": "d8ad38b831dc4a22f50ea5cd65a117a9ea70deca9b17553671c7e7574b351aaf",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Sergio Adolfo Figueroa Momo",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 50000,
+      "balanceClp": 4677331
+    },
+    {
+      "fingerprint": "55371815f3f0a01381a7fe89253a7ce6f1d132172349e41b9534c0bf156419e5",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Juana Elena Saravia",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4627331
+    },
+    {
+      "fingerprint": "df28284039702d23473ca089fb6e74f56653f68b1594b60146d64ad87c9bb5a5",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Juana Elena Saravia",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4607331
+    },
+    {
+      "fingerprint": "bfb88a488472c781448f9a2ef5a4b0d26a2de29ce024c0aa0717448560cc834e",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Juana Elena Saravia",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 25000,
+      "balanceClp": 4597331
+    },
+    {
+      "fingerprint": "509b5de1220b7f7245e05cf7b7754598987645d582999b0a7eb2ff9cbca74b2b",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Angela Rebeca Covarrubias Alvarez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 30000,
+      "balanceClp": 4572331
+    },
+    {
+      "fingerprint": "271d1580c0462080a94965d5fa64abd94707aaa836d70651a33c4ba130d96073",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Alvarez Vernal Angela Orieta",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4542331
+    },
+    {
+      "fingerprint": "452f8108aa251b497f9febc21f4df9fa228dcdc5d8cbd75f8732916af4cf1192",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Alvarez Vernal Angela Orieta",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 53000,
+      "balanceClp": 4497331
+    },
+    {
+      "fingerprint": "1cb5f57436ce34f238a9d61ddaaaeabd08da4e28bf5911a430f9452a4ab1625e",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Alvarez Vernal Angela Orieta",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 1,
+      "balanceClp": 2026
+    },
+    {
+      "fingerprint": "7315fa28f33658faf6cc13b7c3b9ea7b93d22fb996ac397d0b044c6783846a38",
+      "bookedAt": "2026-01-21",
+      "description": "Traspaso De: Dendal Apolonio Alicia Beatriz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 30000,
+      "balanceClp": 4444331
+    },
+    {
+      "fingerprint": "0204b10430ba184cdeb2cc13d79d2247f73e7ec4db7c4d9ca6a969f96c7b75ba",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Esteban Alberto Pefaur",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 130000,
+      "balanceClp": 4414331
+    },
+    {
+      "fingerprint": "932b04bc4b9a810e18b4a69f87bb895461091f9b43091694a906bbb2e66ac47d",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 73100,
+      "balanceClp": 4284331
+    },
+    {
+      "fingerprint": "6a87540df3a5f7d5e41e6a13682958f7f86273b27a195dd0ac2d1b82395aba98",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Marcelo Jesus Schriber Schriber",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5037,
+      "balanceClp": 4211231
+    },
+    {
+      "fingerprint": "1726c7e1de69d18a0d22329dd216320cb89a0f1eeff5d9903e1e62a76c7b5bbb",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 4206194
+    },
+    {
+      "fingerprint": "3df891ee895fab4f09faed710f38575e10e27829c649e19fb5e211cad67373eb",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4201194
+    },
+    {
+      "fingerprint": "5ca2c6750712195cbd2df075dbb74afcaaa5cab207411d4ea4e3d4c8c27e0552",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Carolina Andrea Lagos",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4181194
+    },
+    {
+      "fingerprint": "3df891ee895fab4f09faed710f38575e10e27829c649e19fb5e211cad67373eb",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4171194
+    },
+    {
+      "fingerprint": "b9fdf24076bf3a6d767b589398fe7ca5df180d5457ee2d3eb3abf21685926265",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 400000,
+      "balanceClp": 4151194
+    },
+    {
+      "fingerprint": "40acdcc27d62fa018e1f33c01972ad7ea67272b733b21e91b31d772125df14ae",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso A: Laura Massardo Ortiz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 80000,
+      "creditClp": null,
+      "balanceClp": 3751194
+    },
+    {
+      "fingerprint": "8e14a399e12edd6874a710f4776973d382d0a237efcee25664cef3cb4b96b688",
+      "bookedAt": "2026-01-19",
+      "description": "Traspaso A: Ana Maria Farfan",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 126340,
+      "creditClp": null,
+      "balanceClp": 3831194
+    },
+    {
+      "fingerprint": "ac1ba1a3e501d0e53b66e46d5ca525a0fb4370eb07ab6a784379b1200ad1e746",
+      "bookedAt": "2026-01-16",
+      "description": "Traspaso De: Bahamonde Reyes Vilda Nelly",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 15000,
+      "balanceClp": 3957534
+    },
+    {
+      "fingerprint": "b15d0841d7c8384d80a93fd23412d09b54bec73ed127389aa9f1659ceda34bb3",
+      "bookedAt": "2026-01-16",
+      "description": "Traspaso De: Bahamonde Reyes Vilda Nelly",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 70000,
+      "balanceClp": 3942534
+    },
+    {
+      "fingerprint": "b63dcea53fb28e6b1b7eb5a9ac838b0f98239f284caf5c51cdfbdeefb2865819",
+      "bookedAt": "2026-01-15",
+      "description": "Traspaso De: Villagran Veliz Cecilia Marcela",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 3872534
+    },
+    {
+      "fingerprint": "ca1c2d847f573fab96646d34f74d96afba8448153906b78db93907bf9c49b90e",
+      "bookedAt": "2026-01-15",
+      "description": "Traspaso A: Eduardo Fernandez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 95000,
+      "creditClp": null,
+      "balanceClp": 3867534
+    },
+    {
+      "fingerprint": "0c1397c2875466e77f3a57fecce092baa2c39a95e53f02f229bc5e7da2e09fd1",
+      "bookedAt": "2026-01-14",
+      "description": "Traspaso A Cuenta: 002401972008",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 50000,
+      "creditClp": null,
+      "balanceClp": 3962534
+    },
+    {
+      "fingerprint": "ca4915712b740d7e63cc732bc115bdfe121878fc4116252a40331b1686bd33a8",
+      "bookedAt": "2026-01-14",
+      "description": "Traspaso A: Daniel Bontes Miranda",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 500000,
+      "creditClp": null,
+      "balanceClp": 4012534
+    },
+    {
+      "fingerprint": "cd8fcf77dff4d41f22df37296d9082598bbbf25e77d6382600c856df28d0251b",
+      "bookedAt": "2026-01-14",
+      "description": "Traspaso A Cuenta: 002401972008",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 646059,
+      "creditClp": null,
+      "balanceClp": 4512534
+    },
+    {
+      "fingerprint": "da576580e4944144b924b222448556b6cccb8621fa37addfd0561e96c884f9fa",
+      "bookedAt": "2026-01-14",
+      "description": "Traspaso A: Oscar Enrique Kock San Martin",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 20119,
+      "creditClp": null,
+      "balanceClp": 5158593
+    },
+    {
+      "fingerprint": "2c11a4687a7719441f102869d387e2b25215afa8669fa5980489b2a4ff54c6a8",
+      "bookedAt": "2026-01-14",
+      "description": "Traspaso A: Felipe Nicolas Maturana Nunez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 70000,
+      "creditClp": null,
+      "balanceClp": 5178712
+    },
+    {
+      "fingerprint": "8b311a4d4c9a5b00e2edc5440ba30d52094d4c5c768fa36acfc44a343dfbf000",
+      "bookedAt": "2026-01-13",
+      "description": "Traspaso De: Rivera Veliz Katty Del Carmen",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 5248712
+    },
+    {
+      "fingerprint": "8b311a4d4c9a5b00e2edc5440ba30d52094d4c5c768fa36acfc44a343dfbf000",
+      "bookedAt": "2026-01-13",
+      "description": "Traspaso De: Rivera Veliz Katty Del Carmen",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 5238712
+    },
+    {
+      "fingerprint": "99c355bc218322287a835d447a40261e89637fc8f7b8c5bbc8d67948d87450ef",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Nilton Hugo Urrea Martinez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 105170,
+      "balanceClp": 5228712
+    },
+    {
+      "fingerprint": "87a40c55e27bcd319ad2090a1bd59d450df441a19f44969a5b5ecb1684763357",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5123542
+    },
+    {
+      "fingerprint": "0597d79ff36a1eb5d7a75948b3e8766af0990353fb49a777aa58ee0e12a222e6",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Veliz Cortes Miriam Ruth",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 30000,
+      "balanceClp": 5118542
+    },
+    {
+      "fingerprint": "ca80217f54c034e7af9ee16cb4f63e67927b5e12ccd32666ef741d921a674ed1",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Claudia Alejandra Rami",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 50000,
+      "balanceClp": 5088542
+    },
+    {
+      "fingerprint": "87a40c55e27bcd319ad2090a1bd59d450df441a19f44969a5b5ecb1684763357",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Miriam Ruth Veliz Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 5038542
+    },
+    {
+      "fingerprint": "430f55222050d4e0291ace04d7ab4f1e6a120530b7be98ee01022b0e3688a343",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Danilo Alfredo Tripainao Cortes",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 4000,
+      "balanceClp": 5033542
+    },
+    {
+      "fingerprint": "f1f06ca1c0d900c15dc1a2566dfa83beb92f0cdd332cd5e7e32847d05cf91f44",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Matamala Alvarez Ricardo Andres",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 150000,
+      "balanceClp": 5029542
+    },
+    {
+      "fingerprint": "faf3947ab68491adfd27b0bd6770974f2a683bd0c1e2f2cd7e2e44733e80466e",
+      "bookedAt": "2026-01-12",
+      "description": "Traspaso De: Rene Petricio Delgado Castro",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 30000,
+      "balanceClp": 4879542
+    },
+    {
+      "fingerprint": "2c5084c7c340999d1dc8d0f3ae32127a0d29e9b52e2bad842905606473e34741",
+      "bookedAt": "2026-01-08",
+      "description": "Traspaso De: Figueroa Rojas Francisca Gladys",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 25000,
+      "balanceClp": 4849542
+    },
+    {
+      "fingerprint": "9c07c780762ba0752461b481b9011ff0dd907b20091b6c485a6498728e8e6d52",
+      "bookedAt": "2026-01-08",
+      "description": "Traspaso De: Henry Cristian Tellez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 120000,
+      "balanceClp": 4824542
+    },
+    {
+      "fingerprint": "3d30799b152669684814a708d8d740ccfb94dffa161b7d2f4935714b9b10c2d7",
+      "bookedAt": "2026-01-07",
+      "description": "Traspaso De: Carmen Gloria Mardones Bahamonde",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4704542
+    },
+    {
+      "fingerprint": "1593cbedf4beff7a39d8dcd9633791783bcae965878d6cabe15f6d0b460228eb",
+      "bookedAt": "2026-01-07",
+      "description": "Traspaso De: Carmen Gloria Mardones Bahamonde",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 100000,
+      "balanceClp": 4694542
+    },
+    {
+      "fingerprint": "6819e328988a958c9f94e81d5c70b0f62da9bd4bccdb519240c32ec0f70dcf7b",
+      "bookedAt": "2026-01-07",
+      "description": "Traspaso De: Maria Antonia Cortes Morales",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 35000,
+      "balanceClp": 4594542
+    },
+    {
+      "fingerprint": "40d0aa60749d4f84ed1f1a70d176a0cfeb6dd7cc49f357954d67bcc86c8d5aaf",
+      "bookedAt": "2026-01-06",
+      "description": "Traspaso De: Carlos Octavio Moscoso Onate",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 10000,
+      "balanceClp": 4559542
+    },
+    {
+      "fingerprint": "419fe682c0201c39efc843bc082f4ca16b576bebb8b15eb12a68d89353275e3a",
+      "bookedAt": "2026-01-06",
+      "description": "Traspaso De: Carlos Octavio Moscoso Onate",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4549542
+    },
+    {
+      "fingerprint": "4dae73897315e7b7b203d3cfe8cee832d5df68b2457f24ad84a582371a6ceed1",
+      "bookedAt": "2026-01-06",
+      "description": "Traspaso De: Carlos Octavio Moscoso Onate",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 130000,
+      "balanceClp": 4529542
+    },
+    {
+      "fingerprint": "8d1eb2cd6eb266327955f7c13bef9298e176cee126f8e5e3a62f63bc4669db0f",
+      "bookedAt": "2026-01-06",
+      "description": "Traspaso De: Bontes Miranda Daniel Esteban",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 25000,
+      "balanceClp": 4399542
+    },
+    {
+      "fingerprint": "b13534794cc083e5dd05696e269ff728727fbecc8cb09dcd955015ea4516ba18",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso De: Cristina Soledad Rivas Rosales",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4374542
+    },
+    {
+      "fingerprint": "d03558f4a62234ebd47d90a6e1e5355cd10faa755b24938369b399793e8a6472",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso De: Ximena Soledad Hernand",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 100000,
+      "balanceClp": 4354542
+    },
+    {
+      "fingerprint": "0d3357b683c1f7c01a7058cb5e0fb6ae2b0dabc849e2d4f28d17d7c22a67ff1e",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso De: Raymond Albert Portino Beltran",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 4254542
+    },
+    {
+      "fingerprint": "15de57b0116600604552d659739dd3d9d67abd2163f70d5b837adc3c8ff233de",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso De: Raymond Albert Portino Beltran",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 82760,
+      "balanceClp": 4234542
+    },
+    {
+      "fingerprint": "dd214800bd672648a8812b8ba0f031e9c3f2956c84c24491f7001ea04109f83f",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso De: Caterin Carola Rebolle",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 5000,
+      "balanceClp": 4151782
+    },
+    {
+      "fingerprint": "d9ac9b827e76b5831e8c469cc3425ba9179ef42f9fac71572cce6bc49a96e7bb",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Daniel Bontes Miranda",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 1444629,
+      "creditClp": null,
+      "balanceClp": 4146782
+    },
+    {
+      "fingerprint": "b7ab1ae1f8bf37ace37b900ae919e06772e10f315d43dda2e2fb125ff877c8fb",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Ana Maria Farfan",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 300689,
+      "creditClp": null,
+      "balanceClp": 5591411
+    },
+    {
+      "fingerprint": "64a157532c8467468fa169965eeb083074b1302ba42127f0dbaf5a67a80f8ae3",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A Cuenta: 002402360205",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 85000,
+      "creditClp": null,
+      "balanceClp": 5892100
+    },
+    {
+      "fingerprint": "f6ca40a28361c365de4f1aca41fa5aacbbc2dd556f86b12b16bce8c79c16d749",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Carmen Gloria Mardones",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 37024,
+      "creditClp": null,
+      "balanceClp": 5977100
+    },
+    {
+      "fingerprint": "2d5a8f406ddf639f5e4c7835f90250f9b228d03cc4be5c864db23e05de4a34f6",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Henry Tellez Acym Coquimbo",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 100000,
+      "creditClp": null,
+      "balanceClp": 6014124
+    },
+    {
+      "fingerprint": "78bea354c721d9a0a68807b2efdb5ceb48e08b5bc6d3048d0a05df935383b6ea",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Oscar Enrique Kock San Martin",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 591722,
+      "creditClp": null,
+      "balanceClp": 6114124
+    },
+    {
+      "fingerprint": "bb1d60cc5b426abc8a22551825c71ec7d2163f0ee7d0645a32a261503771cca3",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Luiggi Gonzalez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 72340,
+      "creditClp": null,
+      "balanceClp": 6705846
+    },
+    {
+      "fingerprint": "b436d7f86ad1a2daba8e048d870d48dff35e245d1cdb5581ae5c1e4d3976e97b",
+      "bookedAt": "2026-01-05",
+      "description": "Traspaso A: Miriam Veliz",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 287915,
+      "creditClp": null,
+      "balanceClp": 6778186
+    },
+    {
+      "fingerprint": "c6091ceea648bf710f6689c2d6e5851c11663a90ce2ddfa4e50a40860f136674",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Sergio Adolfo Figueroa Momo",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 40000,
+      "balanceClp": 7066101
+    },
+    {
+      "fingerprint": "d928fe85abe35f1c23ca682ed7dcdcf3fbc208e22ff5f3d5ac4b010405838054",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Mora Adaros Veronica Andrea",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 60000,
+      "balanceClp": 7026101
+    },
+    {
+      "fingerprint": "2addf15ccbe9441bb93541e976280c4f01a9553f99077e82d3ee4f911189ee2c",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Karen Elena Rodriguez Nunez",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 50000,
+      "balanceClp": 6966101
+    },
+    {
+      "fingerprint": "e6e774228dc6ec72579439d30f752f095b899adb6828511c0fdf563a0e0d30bf",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Gabriela Eugen Arenas O Ryan",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 55000,
+      "balanceClp": 6916101
+    },
+    {
+      "fingerprint": "06438c711402134a078c5329d7d66e7cf16aefc3e944f10d57fdcc501f927528",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Almeida Escalona Viviana Carolina",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 100000,
+      "balanceClp": 6861101
+    },
+    {
+      "fingerprint": "dc0b4f957420dc1809bf79032d9c4abfff95305e05f14e513b0cdfcbc9f5b371",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso De: Rocha Puelles Asalia Viviana",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": null,
+      "creditClp": 20000,
+      "balanceClp": 6761101
+    },
+    {
+      "fingerprint": "52ce5e0093261e0feb45095f239e411d15d4c2ba66e0f013d5e29028062b601a",
+      "bookedAt": "2026-01-02",
+      "description": "Traspaso A: Iglesia Alianza Cristiana Y Mision",
+      "channel": "Internet",
+      "documentNumber": null,
+      "chargeClp": 196229,
+      "creditClp": null,
+      "balanceClp": 6741101
+    }
+  ],
+  "issues": [
+    "Abonos extraídos 4046008; cartola 4081007."
+  ],
+  "id": "7b423f8bc3bb594cbf94f814110e5cd559a378036c540f3daee0e5daf0fb8672",
+  "fileName": "CARTOLA BANCO ENERO 2026.pdf",
+  "uploadedAt": "2026-08-24T02:08:39.262Z"
+}
