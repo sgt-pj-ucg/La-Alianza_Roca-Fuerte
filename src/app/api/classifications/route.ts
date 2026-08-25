@@ -85,9 +85,10 @@ export async function POST(request: Request) {
       if (deleteClassificationsError) throw new Error(deleteClassificationsError.message);
       const { error: deleteAllocationsError } = await client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId);
       if (deleteAllocationsError) throw new Error(deleteAllocationsError.message);
-      const { error: insertAllocationsError } = await client.from("transaction_income_allocations").insert(allocations);
+      const { data: insertedAllocations, error: insertAllocationsError } = await client.from("transaction_income_allocations").insert(allocations).select("id");
       if (insertAllocationsError) throw new Error(insertAllocationsError.message);
-      return NextResponse.json({ ok: true });
+      if ((insertedAllocations?.length ?? 0) !== allocations.length) throw new Error("No se pudo comprobar el guardado de todas las divisiones.");
+      return NextResponse.json({ ok: true, saved: insertedAllocations.length });
     }
     if (body.incomeConceptId) {
       const { data: concept, error: conceptError } = await client.from("income_concepts").select("name").eq("id", body.incomeConceptId).single();
@@ -98,11 +99,12 @@ export async function POST(request: Request) {
       const { error: deleteAllocationsError } = await client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId);
       if (deleteAllocationsError) throw new Error(deleteAllocationsError.message);
     }
-    const { error } = await client.from("transaction_classifications").upsert({
+    const { data: savedClassification, error } = await client.from("transaction_classifications").upsert({
       transaction_id: body.transactionId, income_concept_id: body.incomeConceptId ?? null, budget_item_id: body.budgetItemId ?? null,
       status: "CONFIRMED", confidence: 100, note: body.note?.trim() || null, validated_at: new Date().toISOString()
-    }, { onConflict: "transaction_id" });
+    }, { onConflict: "transaction_id" }).select("transaction_id,status,validated_at").single();
     if (error) throw new Error(error.message);
-    return NextResponse.json({ ok: true });
+    if (!savedClassification || savedClassification.status !== "CONFIRMED") throw new Error("No se pudo comprobar el guardado de la clasificación.");
+    return NextResponse.json({ ok: true, saved: savedClassification });
   } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "No fue posible guardar la clasificación." }, { status: 422 }); }
 }
