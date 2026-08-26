@@ -54,7 +54,7 @@ export default function ClassificationPage() {
   async function load() {
     try {
       setError("");
-      const response = await request(`/api/classifications?year=2026&month=${periodMonth}`);
+      const response = await request(`/api/classifications?year=2026&month=${periodMonth}&check=${Date.now()}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       const next = data.transactions as Transaction[];
@@ -74,12 +74,18 @@ export default function ClassificationPage() {
         }
       });
       setChoices(selected); setNotes(savedNotes); setSplits(savedSplits); setSplitOpen(opened);
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "No fue posible cargar los movimientos."); }
+      return next;
+    } catch (cause) { setError(cause instanceof Error ? cause.message : "No fue posible cargar los movimientos."); return null; }
   }
 
   useEffect(() => { void load(); }, [periodMonth]);
 
   const confirmed = (row: Transaction) => Boolean(row.transaction_classifications?.length || row.transaction_income_allocations?.length || row.transaction_expense_allocations?.length);
+  async function verifyPersisted(transactionId: string) {
+    const refreshed = await load();
+    const stored = refreshed?.find(row => row.id === transactionId);
+    if (!stored || !confirmed(stored)) throw new Error("No se pudo comprobar el guardado en la base de datos. El movimiento sigue pendiente.");
+  }
   const visible = useMemo(() => transactions.filter(row => filter === "all" || (filter === "pending" ? !confirmed(row) : row.credit_clp ? filter === "income" : filter === "expense")), [transactions, filter]);
   const isOtherIncome = (id: string) => concepts.find(concept => concept.id === choices[id])?.name === "Otro ingreso";
   const isOtherExpense = (id: string) => choices[id] === OTHER_EXPENSE;
@@ -117,7 +123,7 @@ export default function ClassificationPage() {
         const allocations = parts.map(part => income ? { incomeConceptId: part.categoryId, amountClp: Number(part.amountClp), description: part.description.trim() } : { budgetItemId: part.categoryId === OTHER_EXPENSE ? null : part.categoryId, amountClp: Number(part.amountClp), description: part.description.trim() });
         const response = await request("/api/classifications", { method: "POST", body: JSON.stringify({ transactionId: row.id, allocations }) });
         const data = await response.json(); if (!response.ok) throw new Error(data.error);
-        await load(); setNotice("División confirmada y guardada correctamente.");
+        await verifyPersisted(row.id); setNotice("División confirmada y guardada correctamente.");
       } catch (cause) { setError(cause instanceof Error ? cause.message : "No fue posible guardar."); }
       finally { setSaving(null); }
       return;
@@ -133,7 +139,7 @@ export default function ClassificationPage() {
         : { transactionId: row.id, budgetItemId: choice === OTHER_EXPENSE ? null : choice, manualExpense: choice === OTHER_EXPENSE, note };
       const response = await request("/api/classifications", { method: "POST", body: JSON.stringify(payload) });
       const data = await response.json(); if (!response.ok) throw new Error(data.error);
-      await load(); setNotice("Clasificación confirmada y guardada correctamente.");
+      await verifyPersisted(row.id); setNotice("Clasificación confirmada y guardada correctamente.");
     } catch (cause) { setError(cause instanceof Error ? cause.message : "No fue posible guardar."); }
     finally { setSaving(null); }
   }

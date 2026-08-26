@@ -101,13 +101,15 @@ export async function POST(request: Request) {
     if (!income && !budgetItemId && !manualExpense) return invalid("Selecciona una partida o elige Otro egreso.");
     if (income && body.incomeConceptName === "Otro ingreso" && !note) return invalid("Describe este otro ingreso antes de confirmar.");
     if (manualExpense && !note) return invalid("Describe este otro egreso antes de confirmar.");
-    const [{ error: clearIncome }, { error: clearExpense }] = await Promise.all([
-      client.from("transaction_income_allocations").delete().eq("transaction_id", body.transactionId),
-      client.from("transaction_expense_allocations").delete().eq("transaction_id", body.transactionId)
-    ]);
-    if (clearIncome || clearExpense) throw new Error(clearIncome?.message ?? clearExpense?.message);
-    const { data: saved, error: saveError } = await client.from("transaction_classifications").upsert({ transaction_id: body.transactionId, income_concept_id: incomeConceptId, budget_item_id: budgetItemId, status: "CONFIRMED", confidence: 100, note, validated_at: new Date().toISOString() }, { onConflict: "transaction_id" }).select("transaction_id,status,validated_at").single();
+    const { data: savedRows, error: saveError } = await client.rpc("confirm_transaction_classification", {
+      p_transaction_id: body.transactionId,
+      p_income_concept_id: incomeConceptId,
+      p_budget_item_id: budgetItemId,
+      p_note: note,
+      p_manual_expense: manualExpense
+    });
     if (saveError) throw new Error(saveError.message);
+    const saved = savedRows?.[0];
     if (!saved || saved.status !== "CONFIRMED" || !saved.validated_at) throw new Error("No se pudo comprobar el guardado de la clasificación.");
     return NextResponse.json({ ok: true, saved }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
