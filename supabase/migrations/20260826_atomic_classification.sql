@@ -11,6 +11,7 @@ language plpgsql
 security invoker
 set search_path = public
 as $$
+#variable_conflict use_column
 declare
   v_credit bigint;
   v_charge bigint;
@@ -31,8 +32,10 @@ begin
     raise exception 'Otro egreso requiere una descripción';
   end if;
 
-  delete from public.transaction_income_allocations where transaction_id = p_transaction_id;
-  delete from public.transaction_expense_allocations where transaction_id = p_transaction_id;
+  delete from public.transaction_income_allocations as income_allocations
+  where income_allocations.transaction_id = p_transaction_id;
+  delete from public.transaction_expense_allocations as expense_allocations
+  where expense_allocations.transaction_id = p_transaction_id;
 
   return query
   insert into public.transaction_classifications (
@@ -40,7 +43,7 @@ begin
   ) values (
     p_transaction_id, p_income_concept_id, p_budget_item_id, 'CONFIRMED', 100,
     nullif(trim(coalesce(p_note, '')), ''), now()
-  ) on conflict (transaction_id) do update set
+  ) on conflict on constraint transaction_classifications_transaction_id_key do update set
     income_concept_id = excluded.income_concept_id,
     budget_item_id = excluded.budget_item_id,
     status = excluded.status,

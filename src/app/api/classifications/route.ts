@@ -50,7 +50,17 @@ export async function GET(request: Request) {
       client.from("bank_statements").select("period_year,period_month,status").order("period_year").order("period_month")
     ]);
     if (conceptsError || itemsError || statementError || monthsError) throw new Error(conceptsError?.message ?? itemsError?.message ?? statementError?.message ?? monthsError?.message);
-    const transactions = (statement?.bank_transactions ?? []).sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
+    // PostgREST representa relaciones uno-a-uno como objeto y uno-a-muchos como lista.
+    // Normalizamos ambas variantes para que la clasificación confirmada nunca se interprete como pendiente.
+    const asList = (value: unknown) => Array.isArray(value) ? value : value ? [value] : [];
+    const transactions = (statement?.bank_transactions ?? [])
+      .map((transaction: any) => ({
+        ...transaction,
+        transaction_classifications: asList(transaction.transaction_classifications),
+        transaction_income_allocations: asList(transaction.transaction_income_allocations),
+        transaction_expense_allocations: asList(transaction.transaction_expense_allocations)
+      }))
+      .sort((a: any, b: any) => b.booked_at.localeCompare(a.booked_at));
     return NextResponse.json({ concepts, items, transactions, months: months ?? [], period: { year, month } }, { headers: { "Cache-Control": "no-store, max-age=0" } });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "No fue posible cargar la clasificación." }, { status: 422 });
