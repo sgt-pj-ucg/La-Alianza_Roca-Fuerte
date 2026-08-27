@@ -74,8 +74,10 @@ export async function POST(request: Request) {
     const client = await database(request);
     const body = await request.json();
     if (!body.transactionId) return invalid("Falta el movimiento a clasificar.");
-    const { data: transaction, error: transactionError } = await client.from("bank_transactions").select("id,credit_clp,charge_clp").eq("id", body.transactionId).single();
+    const { data: transaction, error: transactionError } = await client.from("bank_transactions").select("id,credit_clp,charge_clp,bank_statements(status)").eq("id", body.transactionId).single();
     if (transactionError || !transaction) throw new Error(transactionError?.message ?? "No se encontró el movimiento.");
+    const statement = Array.isArray((transaction as any).bank_statements) ? (transaction as any).bank_statements[0] : (transaction as any).bank_statements;
+    if (statement?.status === "CLOSED") return invalid("El mes está cerrado. Solicita una reapertura controlada antes de modificar una clasificación.");
     const income = Boolean(transaction.credit_clp);
     const expected = Number(transaction.credit_clp ?? transaction.charge_clp);
     const allocations = Array.isArray(body.allocations) ? body.allocations : null;
