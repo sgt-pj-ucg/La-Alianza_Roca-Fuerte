@@ -62,7 +62,7 @@ export default function Home() {
       setNotice(`${MONTHS[month - 1]} 2026 fue reabierto de forma controlada. El ajuste queda registrado en auditoría.`); await load();
     } catch (cause) { setError(cause instanceof Error ? cause.message : "No fue posible reabrir el mes."); }
   }
-  function navigate(name: string) { if (name === "Cartolas") return window.location.assign("/cartolas"); if (name === "Clasificación") return window.location.assign("/clasificacion"); setActive(name); setNotice(""); setError(""); }
+  function navigate(name: string) { if (name === "Cartolas") return window.location.assign("/cartolas"); if (name === "Clasificación") return window.location.assign("/clasificacion"); if (name === "Reportes") return window.location.assign("/reportes"); setActive(name); setNotice(""); setError(""); }
   const monthClosed = data?.statement?.status === "CLOSED"; const rows = [...model.income.entries()].sort((a, b) => b[1] - a[1]);
   const expenditure = [...model.expenseItems.entries()].map(([key, executed]) => { const [category, name] = key.split("|"); const budget = model.budgetItems.find(item => item.category === category && item.name === name)?.budget ?? 0; return { category, name, executed, budget }; }).sort((a, b) => b.executed - a.executed);
   return <AuthGate><main className="app-shell"><aside className="sidebar"><div className="sidebar-profile"><i>MV</i><span>Miriam Véliz Cortés<small>Tesorería</small></span></div><div className="brand"><div>TESORERÍA<small>Iglesia · 2026</small></div></div><nav>{menu.map(name => <button key={name} className={active === name ? "active" : ""} onClick={() => navigate(name)}>{name}</button>)}</nav><div className="sidebar-foot">Datos financieros en CLP<br/><span>Gestión mensual</span></div></aside>
