@@ -23,7 +23,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
     window.addEventListener("focus", syncSession);
     return () => { active = false; window.clearInterval(timer); window.removeEventListener("focus", syncSession); data.subscription.unsubscribe(); };
   }, []);
-  async function login() { if (!supabase) return; setError(""); const { error } = await supabase.auth.signInWithPassword({ email, password }); if (error) setError("No fue posible iniciar sesión. Revisa correo y contraseña."); }
+  async function login() {
+    if (!supabase) return;
+    setError("");
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) setError("No fue posible iniciar sesión. Revisa correo y contraseña.");
+    } catch {
+      setError("No fue posible conectar con el servicio de acceso. La contraseña no pudo verificarse. Revisa que el proyecto de Supabase esté activo e inténtalo nuevamente.");
+    }
+  }
   async function logout() { setSignedIn(false); setError(""); await supabase?.auth.signOut({ scope: "local" }); }
   if (!ready) return <main className="auth-screen">Conectando con Tesorería…</main>;
   if (!signedIn) return <main className="auth-screen"><div className="auth-glow one"/><div className="auth-glow two"/><section className="auth-card"><div className="auth-logo-wrap"><img className="auth-logo" src="/logo-la-alianza.png" alt="La Alianza Roca Fuerte"/></div><p className="eyebrow">TESORERÍA IGLESIA · 2026</p><h1>Bienvenida, Miriam</h1><p className="auth-copy">Ingresa con tus credenciales para acceder a la gestión financiera.</p><form onSubmit={event => { event.preventDefault(); void login(); }}><label>Correo electrónico<input placeholder="nombre@correo.cl" type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} /></label><label>Contraseña<input placeholder="••••••••" type="password" autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} /></label><button className="primary auth-submit" type="submit">Iniciar sesión <span>→</span></button></form>{error && <p className="auth-error">{error}</p>}<p className="auth-foot">Acceso protegido · Tesorería La Alianza Roca Fuerte</p></section></main>;
