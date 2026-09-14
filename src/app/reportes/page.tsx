@@ -8,6 +8,7 @@ import { resolveContributorName } from "@/lib/contributor";
 import { supabase } from "@/lib/supabase/client";
 import "./reportes.css";
 import "./report-interactions.css";
+import "./donut-spacing.css";
 
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const COLORS = ["#174b3b", "#24865f", "#d89b38", "#6aa784", "#85b6aa", "#bc7652"];
