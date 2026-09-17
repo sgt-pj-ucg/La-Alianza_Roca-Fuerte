@@ -59,8 +59,10 @@ export async function extractBankStatement(pdfBuffer: Buffer): Promise<ParsedSta
     const [amount, balanceClp] = values;
     // El nombre bancario se conserva tal cual. Solo determinamos el sentido contable
     // para no descartar pagos de servicios o depósitos escritos de otra forma.
-    const isCharge = /\bTraspaso\s+A(?::|\s+Cuenta)|\bPago\s+Servicio/i.test(description);
-    const isCredit = /\bTraspaso\s+De:|\bDep[oó]s(?:ito)?\s+En\s+Efectivo/i.test(description);
+    const isCharge = /\bTraspaso\s+A(?::|\s+Cuenta\b)|\bPago\s+Servicio/i.test(description);
+    // Banco puede escribir el abono como “Traspaso De: Nombre” o “Traspaso De Cuenta: 002…”.
+    // Ambos son ingresos; el número siguiente identifica la cuenta de origen y no cambia su sentido.
+    const isCredit = /\bTraspaso\s+De(?::|\s+Cuenta\b)|\bDep[oó]s(?:ito)?\s+En\s+Efectivo/i.test(description);
     if (!isCharge && !isCredit) { issues.push(`No se pudo determinar cargo/abono para ${date[0]}.`); continue; }
     const bookedAt = `${date[3]}-${date[2]}-${date[1]}`;
     // El índice de fila evita colisiones incluso cuando dos movimientos tienen los mismos datos visibles.
