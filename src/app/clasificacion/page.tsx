@@ -5,6 +5,7 @@ import { AuthGate } from "@/components/auth-gate";
 import { supabase } from "@/lib/supabase/client";
 import { clp } from "@/lib/money";
 import "./split-actions.css";
+import "./classification-fields.css";
 
 type Choice = { id: string; name: string; budget_categories?: { name: string } | null };
 type Allocation = { categoryId: string; amountClp: number; description: string };
